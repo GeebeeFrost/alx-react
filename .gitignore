@@ -5,4 +5,6 @@ node_modules/
 # Main file
 dist/main.js
 0x00-Webpack/task_0/dist/main.js
-0x00-Webpack/task_1/public/bundle.js.LICENSE.txt
+
+# License
+bundle.js.LICENSE.txt
