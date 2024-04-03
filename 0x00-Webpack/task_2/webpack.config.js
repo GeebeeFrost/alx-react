@@ -15,7 +15,7 @@ module.exports = {
       },
       {
         test: /\.jp?g$/,
-        use: ["url-loader", "image-webpack-loader"],
+        use: ["file-loader", "image-webpack-loader"],
       },
     ],
   },
