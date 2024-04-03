@@ -19,7 +19,7 @@ module.exports = {
     },
   },
   devServer: {
-    contentBase: path.join(__dirname, "public"),
+    contentBase: "./public",
     open: true,
     port: 8564,
   },
