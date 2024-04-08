@@ -1,6 +1,8 @@
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
+  mode: "development",
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -13,20 +15,27 @@ module.exports = {
   devtool: "inline-source-map",
   plugins: [
     new HtmlWebpackPlugin({
-      filename: "index.html",
-      title: "React App",
+      template: "./dist/index.html",
     }),
   ],
   module: {
     rules: [
       {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ["babel-loader"],
+      },
+      {
         test: /\.css$/,
         use: ["style-loader", "css-loader"],
       },
       {
-        test: /\.(?:gif|png|jp?g|svg)$/,
-        use: ["image-webpack-loader"],
+        test: /\.(gif|png|jp?g|svg)$/,
+        use: ["file-loader", "image-webpack-loader"],
       },
     ],
+  },
+  resolve: {
+    extensions: [".*", ".js", ".jsx"],
   },
 };
