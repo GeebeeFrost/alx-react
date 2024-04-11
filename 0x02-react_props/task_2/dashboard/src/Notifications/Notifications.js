@@ -2,13 +2,13 @@ import React from "react";
 import "./Notifications.css";
 import { getLatestNotification } from "../utils/utils";
 import closeIcon from "../assets/close-icon.png";
+import NotificationItem from "./NotificationItem";
 
 const notifications = [
   { text: "New course available", priority: "default", id: 1 },
   { text: "New resume available", priority: "urgent", id: 2 },
+  { html: { __html: getLatestNotification() }, priority: "urgent", id: 3 },
 ];
-
-const dangerousHTML = { __html: getLatestNotification() };
 
 function close() {
   console.log("Close button has been clicked");
@@ -20,11 +20,13 @@ export default function Notifications() {
       <p>Here is the list of notifications</p>
       <ul>
         {notifications.map((notification) => (
-          <li key={notification.id} data-priority={notification.priority}>
-            {notification.text}
-          </li>
+          <NotificationItem
+            key={notification.id}
+            type={notification.priority}
+            value={notification.text}
+            html={notification.html}
+          />
         ))}
-        <li dangerouslySetInnerHTML={dangerousHTML} data-priority="urgent"></li>
       </ul>
       <button
         style={{

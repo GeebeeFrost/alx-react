@@ -1,6 +1,7 @@
 import React from "react";
 import { shallow } from "enzyme";
 import Notifications from "./Notifications";
+import NotificationItem from "./NotificationItem";
 
 describe("Notifications Component Tests", () => {
   it("renders without crashing", () => {
@@ -8,10 +9,15 @@ describe("Notifications Component Tests", () => {
     expect(notifications.exists()).toBe(true);
   });
 
-  it("renders a list of notifications", () => {
+  it("renders a list of NotificationItem components with correct HTML", () => {
     const notifications = shallow(<Notifications />);
     expect(notifications.find("ul").exists()).toBe(true);
-    expect(notifications.find("li").exists()).toBe(true);
+    notifications.find("ul").forEach((listItem) => {
+      expect(listItem.equals(<NotificationItem />));
+    });
+    expect(notifications.find("ul").childAt(0).html()).toEqual(
+      '<li data-notification-type="default">New course available</li>'
+    );
   });
 
   it("renders the text 'Here is the list of notifications'", () => {

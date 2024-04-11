@@ -10,6 +10,6 @@ describe("Footer component tests", () => {
 
   it("should render p tag with text 'Copyright'", () => {
     const footerWrapper = shallow(<Footer />);
-    expect(footerWrapper.find("p").text()).toHave("Copyright");
+    expect(footerWrapper.find("p").text()).toContain("Copyright");
   });
 });
