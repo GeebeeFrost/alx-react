@@ -4,7 +4,7 @@ import NotificationItem from "./NotificationItem";
 
 describe("NotificationItem test", () => {
   it("renders without crashing", () => {
-    const notItemWrapper = shallow(<NotificationItem />);
+    const notItemWrapper = shallow(<NotificationItem type="default" />);
     expect(notItemWrapper.exists()).toBe(true);
   });
 

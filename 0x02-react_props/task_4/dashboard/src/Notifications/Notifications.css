@@ -10,3 +10,8 @@
 [data-notification-type="default"] {
   color: blue;
 }
+
+.menu-item {
+  position: absolute;
+  right: 0;
+}
