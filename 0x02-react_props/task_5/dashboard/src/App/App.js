@@ -6,14 +6,27 @@ import Header from "../Header/Header";
 import "./App.css";
 import PropTypes from "prop-types";
 import CourseList from "../CourseList/CourseList";
+import { getLatestNotification } from "../utils/utils";
+
+const listCourses = [
+  { id: 1, name: "ES6", credit: 60 },
+  { id: 2, name: "Webpack", credit: 20 },
+  { id: 3, name: "React", credit: 40 },
+];
+
+const listNotifications = [
+  { value: "New course available", type: "default", id: 1 },
+  { value: "New resume available", type: "urgent", id: 2 },
+  { html: { __html: getLatestNotification() }, type: "urgent", id: 3 },
+];
 
 const App = ({ isLoggedIn = false }) => {
   return (
     <>
-      <Notifications />
+      <Notifications listNotifications={listNotifications} />
       <div className="App">
         <Header />
-        {isLoggedIn ? <CourseList /> : <Login />}
+        {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
         <Footer />
       </div>
     </>
@@ -22,6 +35,10 @@ const App = ({ isLoggedIn = false }) => {
 
 App.propTypes = {
   isLoggedIn: PropTypes.bool,
+};
+
+App.defaultProps = {
+  isLoggedIn: false,
 };
 
 export default App;

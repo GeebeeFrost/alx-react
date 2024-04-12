@@ -4,7 +4,7 @@ import CourseList from "./CourseList";
 import CourseListRow from "./CourseListRow";
 
 describe("CourseList component tests", () => {
-  it("renders CourseList component without crashing", () => {
+  it("renders CourseList component without crashing when no listCourses provided", () => {
     const listWrapper = shallow(<CourseList />);
     expect(listWrapper.exists()).toBe(true);
   });
@@ -19,8 +19,18 @@ describe("CourseList component tests", () => {
     expect(listWrapper.find("thead").find(CourseListRow)).toHaveLength(2);
   });
 
-  it("renders three CourseListRow components within the tbody element", () => {
-    const listWrapper = shallow(<CourseList />);
+  it("renders CourseList component without crashing when listCourses is empty", () => {
+    const listWrapper = shallow(<CourseList listCourses={[]} />);
+    expect(listWrapper.exists()).toBe(true);
+  });
+
+  it("renders three CourseListRow components within the tbody element when listCourses is provided", () => {
+    const listCourses = [
+      { id: 1, name: "ES6", credit: 60 },
+      { id: 2, name: "Webpack", credit: 20 },
+      { id: 3, name: "React", credit: 40 },
+    ];
+    const listWrapper = shallow(<CourseList listCourses={listCourses} />);
     expect(listWrapper.find("tbody").find(CourseListRow)).toHaveLength(3);
   });
 });
