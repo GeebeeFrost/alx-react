@@ -8,7 +8,6 @@ import NotificationItemPropType from "./NotificationItemShape";
 class Notifications extends React.Component {
   constructor(props) {
     super(props);
-    this.close = this.close.bind(this);
     this.markAsRead = this.markAsRead.bind(this);
   }
 
