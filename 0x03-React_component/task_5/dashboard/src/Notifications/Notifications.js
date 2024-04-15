@@ -22,12 +22,14 @@ class Notifications extends React.Component {
     listNotifications: [],
   };
 
-  close() {
-    console.log("Close button has been clicked");
-  }
-
   markAsRead(id) {
     console.log(`Notification ${id} has been marked as read`);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return (
+      nextProps.listNotifications.length > this.props.listNotifications.length
+    );
   }
 
   render() {
@@ -67,7 +69,7 @@ class Notifications extends React.Component {
                 cursor: "pointer",
               }}
               aria-label="close"
-              onClick={this.close}>
+              onClick={console.log("Close button has been clicked")}>
               <img src={closeIcon} alt="Close button"></img>
             </button>
           </div>
