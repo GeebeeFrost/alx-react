@@ -5,8 +5,6 @@ const WithLogging = (WrappedComponent) => {
     return WrappedComponent.displayName || WrappedComponent.name || "Component";
   }
 
-  WithLogging.displayName = `WithLogging(${getDisplayName(WrappedComponent)})`;
-
   class NewComponent extends React.Component {
     componentDidMount() {
       console.log(`Component ${getDisplayName(WrappedComponent)} is mounted`);
@@ -22,6 +20,7 @@ const WithLogging = (WrappedComponent) => {
       return <WrappedComponent {...this.props} />;
     }
   }
+  NewComponent.displayName = `WithLogging(${getDisplayName(WrappedComponent)})`;
 
   return NewComponent;
 };
