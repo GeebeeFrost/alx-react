@@ -68,6 +68,37 @@ describe("Notifications Component Tests", () => {
     );
     expect(notifications.find(".Notifications").exists()).toBe(true);
   });
+
+  it("does not rerender the component when listNotifications prop is the same", () => {
+    const listNotifications = [
+      { value: "New course available", type: "default", id: 1 },
+    ];
+    const notifications = shallow(
+      <Notifications displayDrawer listNotifications={listNotifications} />
+    );
+    const shouldUpdate = notifications.instance().shouldComponentUpdate({
+      displayDrawer: true,
+      listNotifications,
+    });
+    expect(shouldUpdate).toBe(false);
+  });
+
+  it("rerenders the component when listNotifications prop is greater than previous", () => {
+    const listNotifications = [
+      { value: "New course available", type: "default", id: 1 },
+    ];
+    const notifications = shallow(
+      <Notifications displayDrawer listNotifications={listNotifications} />
+    );
+    const shouldUpdate = notifications.instance().shouldComponentUpdate({
+      displayDrawer: true,
+      listNotifications: [
+        ...listNotifications,
+        { value: "New resume available", type: "urgent", id: 2 },
+      ],
+    });
+    expect(shouldUpdate).toBe(true);
+  });
 });
 
 describe("markAsRead method Tests", () => {
