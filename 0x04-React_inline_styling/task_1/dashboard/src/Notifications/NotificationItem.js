@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { StyleSheet, css } from "aphrodite";
 
 class NotificationItem extends React.PureComponent {
   constructor(props) {
@@ -24,11 +25,21 @@ class NotificationItem extends React.PureComponent {
       <li
         data-notification-type={this.props.type}
         dangerouslySetInnerHTML={this.props.html}
+        className={css(this.props.type === "urgent" ? styles.red : styles.blue)}
         onClick={() => this.props.markAsRead(this.props.id)}>
         {this.props.value}
       </li>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  red: {
+    color: "red",
+  },
+  blue: {
+    color: "blue",
+  },
+});
 
 export default NotificationItem;

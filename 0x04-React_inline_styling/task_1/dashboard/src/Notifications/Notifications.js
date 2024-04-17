@@ -2,13 +2,14 @@ import React from "react";
 import closeIcon from "../assets/close-icon.png";
 import NotificationItem from "./NotificationItem";
 import PropTypes from "prop-types";
-import "./Notifications.css";
 import NotificationItemPropType from "./NotificationItemShape";
+import { StyleSheet, css } from "aphrodite";
 
 class Notifications extends React.Component {
   constructor(props) {
     super(props);
     this.markAsRead = this.markAsRead.bind(this);
+    this.close = this.close.bind(this);
   }
 
   static propTypes = {
@@ -25,6 +26,10 @@ class Notifications extends React.Component {
     console.log(`Notification ${id} has been marked as read`);
   }
 
+  close() {
+    console.log("Close button has been clicked");
+  }
+
   shouldComponentUpdate(nextProps) {
     return (
       nextProps.listNotifications.length > this.props.listNotifications.length
@@ -34,11 +39,11 @@ class Notifications extends React.Component {
   render() {
     return (
       <>
-        <div className="menuItem">
+        <div className={css(styles.menuItem)}>
           <span>Your notifications</span>
         </div>
         {this.props.displayDrawer && (
-          <div className="Notifications">
+          <div className={css(styles.Notifications)}>
             {this.props.listNotifications.length === 0 ? (
               <p>No new notification for now</p>
             ) : (
@@ -68,7 +73,7 @@ class Notifications extends React.Component {
                 cursor: "pointer",
               }}
               aria-label="close"
-              onClick={console.log("Close button has been clicked")}>
+              onClick={this.close()}>
               <img src={closeIcon} alt="Close button"></img>
             </button>
           </div>
@@ -77,5 +82,21 @@ class Notifications extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  Notifications: {
+    border: "2px dashed #e0354b",
+    padding: "2rem",
+    width: "30%",
+    position: "absolute",
+    top: "2rem",
+    right: "1rem",
+  },
+
+  menuItem: {
+    position: "absolute",
+    right: "1rem",
+  },
+});
 
 export default Notifications;
