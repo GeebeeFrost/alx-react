@@ -1,6 +1,15 @@
 import React from "react";
 import Footer from "./Footer";
 import { shallow } from "enzyme";
+import { StyleSheetTestUtils } from "aphrodite";
+
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
+});
+
+afterEach(() => {
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
 
 describe("Footer component tests", () => {
   it("should render without crashing", () => {

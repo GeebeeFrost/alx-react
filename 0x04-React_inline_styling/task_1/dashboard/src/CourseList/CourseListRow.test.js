@@ -1,6 +1,15 @@
 import React from "react";
 import { shallow } from "enzyme";
 import CourseListRow from "./CourseListRow";
+import { StyleSheetTestUtils } from "aphrodite";
+
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
+});
+
+afterEach(() => {
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
 
 describe("CourseListRow component tests", () => {
   it("renders CourseListRow component without crashing", () => {

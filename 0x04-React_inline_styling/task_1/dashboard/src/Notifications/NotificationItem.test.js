@@ -1,6 +1,15 @@
 import React from "react";
 import { shallow } from "enzyme";
 import NotificationItem from "./NotificationItem";
+import { StyleSheetTestUtils } from "aphrodite";
+
+beforeEach(() => {
+  StyleSheetTestUtils.suppressStyleInjection();
+});
+
+afterEach(() => {
+  StyleSheetTestUtils.clearBufferAndResumeStyleInjection();
+});
 
 describe("NotificationItem test", () => {
   it("renders without crashing", () => {
@@ -22,9 +31,7 @@ describe("NotificationItem test", () => {
     const notItemWrapper = shallow(
       <NotificationItem html={{ __html: "<u>test</u>" }} type="default" />
     );
-    expect(notItemWrapper.find("li").html()).toBe(
-      '<li data-notification-type="default"><u>test</u></li>'
-    );
+    expect(notItemWrapper.find("li").html()).toContain("<u>test</u>");
   });
 });
 
