@@ -8,6 +8,7 @@ import CourseList from "../CourseList/CourseList";
 import { getLatestNotification } from "../utils/utils";
 import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBottom";
 import BodySection from "../BodySection/BodySection";
+import { StyleSheet, css } from "aphrodite";
 
 const listCourses = [
   { id: 1, name: "ES6", credit: 60 },
@@ -56,7 +57,7 @@ class App extends React.Component {
     return (
       <>
         <Notifications listNotifications={listNotifications} />
-        <div className="App">
+        <div className={css(styles.App)}>
           <Header />
           {this.props.isLoggedIn ? (
             <BodySectionWithMarginBottom title="Course list">
@@ -76,5 +77,14 @@ class App extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  App: {
+    fontFamily: "Arial, sans-serif",
+    margin: "0",
+    padding: "0",
+    boxSizing: "border-box",
+  },
+});
 
 export default App;
