@@ -9,30 +9,31 @@ class Notifications extends React.Component {
   constructor(props) {
     super(props);
     this.markAsRead = this.markAsRead.bind(this);
-    this.close = this.close.bind(this);
   }
 
   static propTypes = {
     displayDrawer: PropTypes.bool,
     listNotifications: PropTypes.arrayOf(NotificationItemPropType),
+    handleDisplayDrawer: PropTypes.func,
+    handleHideDrawer: PropTypes.func,
   };
 
   static defaultProps = {
     displayDrawer: false,
     listNotifications: [],
+    handleDisplayDrawer: () => {},
+    handleHideDrawer: () => {},
   };
 
   markAsRead(id) {
     console.log(`Notification ${id} has been marked as read`);
   }
 
-  close() {
-    console.log("Close button has been clicked");
-  }
-
   shouldComponentUpdate(nextProps) {
     return (
-      nextProps.listNotifications.length > this.props.listNotifications.length
+      nextProps.listNotifications.length >
+        this.props.listNotifications.length ||
+      nextProps.displayDrawer !== this.props.displayDrawer
     );
   }
 
@@ -43,7 +44,8 @@ class Notifications extends React.Component {
           className={css(
             styles.menuItem,
             this.props.displayDrawer && styles.mobileMenuItem
-          )}>
+          )}
+          onClick={this.props.handleDisplayDrawer}>
           <span>Your notifications</span>
         </div>
         {this.props.displayDrawer && (
@@ -77,7 +79,7 @@ class Notifications extends React.Component {
                 cursor: "pointer",
               }}
               aria-label="close"
-              onClick={this.close()}>
+              onClick={this.props.handleHideDrawer}>
               <img src={closeIcon} alt="Close button"></img>
             </button>
           </div>

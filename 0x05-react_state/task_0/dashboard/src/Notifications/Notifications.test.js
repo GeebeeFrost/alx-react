@@ -127,3 +127,23 @@ describe("markAsRead method Tests", () => {
     spy.mockRestore();
   });
 });
+
+describe("Drawer method tests", () => {
+  it("should call handleDisplayDrawer when Your notifications is clicked", () => {
+    const handleDisplayDrawer = jest.fn();
+    const notWrapper = shallow(
+      <Notifications handleDisplayDrawer={handleDisplayDrawer} />
+    );
+    notWrapper.find("div[className^='menuItem']").simulate("click");
+    expect(handleDisplayDrawer).toHaveBeenCalled();
+  });
+
+  it("should call handleHideDrawer when close button is clicked", () => {
+    const handleHideDrawer = jest.fn();
+    const notWrapper = shallow(
+      <Notifications handleHideDrawer={handleHideDrawer} displayDrawer />
+    );
+    notWrapper.find("button").simulate("click");
+    expect(handleHideDrawer).toHaveBeenCalled();
+  });
+});

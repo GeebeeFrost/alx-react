@@ -26,6 +26,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.handleKeyPress = this.handleKeyPress.bind(this);
+    this.state = { displayDrawer: false };
+    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
+    this.handleHideDrawer = this.handleHideDrawer.bind(this);
   }
 
   static propTypes = {
@@ -45,6 +48,14 @@ class App extends React.Component {
     }
   }
 
+  handleDisplayDrawer() {
+    this.setState({ displayDrawer: true });
+  }
+
+  handleHideDrawer() {
+    this.setState({ displayDrawer: false });
+  }
+
   componentDidMount() {
     document.addEventListener("keydown", this.handleKeyPress);
   }
@@ -56,7 +67,12 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Notifications listNotifications={listNotifications} />
+        <Notifications
+          listNotifications={listNotifications}
+          displayDrawer={this.state.displayDrawer}
+          handleDisplayDrawer={this.handleDisplayDrawer}
+          handleHideDrawer={this.handleHideDrawer}
+        />
         <div className={css(styles.App)}>
           <Header />
           {this.props.isLoggedIn ? (
