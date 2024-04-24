@@ -13,23 +13,3 @@ export default function printBestStudents(obj) {
 
   console.log(bestStudents.toJS());
 }
-
-const grades = {
-  1: {
-    score: 99,
-    firstName: "guillaume",
-    lastName: "salva",
-  },
-  2: {
-    score: 69,
-    firstName: "guillau",
-    lastName: "sal",
-  },
-  3: {
-    score: 79,
-    firstName: "guillu",
-    lastName: "sa",
-  },
-};
-
-printBestStudents(grades);
