@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import logo from "../assets/holberton-logo.jpg";
 import { StyleSheet, css } from "aphrodite";
-import AppContext from "../App/AppContext";
+import { AppContext } from "../App/AppContext";
 
 const Header = () => {
   const { user, logOut } = useContext(AppContext);

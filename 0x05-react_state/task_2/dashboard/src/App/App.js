@@ -8,7 +8,7 @@ import { getLatestNotification } from "../utils/utils";
 import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBottom";
 import BodySection from "../BodySection/BodySection";
 import { StyleSheet, css } from "aphrodite";
-import AppContext from "./AppContext";
+import { AppContext } from "./AppContext";
 
 const listCourses = [
   { id: 1, name: "ES6", credit: 60 },

@@ -10,6 +10,7 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import CourseList from "../CourseList/CourseList";
 import { StyleSheetTestUtils } from "aphrodite";
+import { AppContext, user, logOut } from "./AppContext";
 
 beforeEach(() => {
   StyleSheetTestUtils.suppressStyleInjection();
@@ -42,32 +43,49 @@ describe("App Component Tests", () => {
   });
 });
 
-describe("App Component Tests with isLoggedIn prop", () => {
+describe("App Component Tests with isLoggedIn state", () => {
+  const appWrapper = shallow(<App />);
+  appWrapper.setState({ user: { isLoggedIn: true } });
+
   it("should not render Login", () => {
-    const login = shallow(<App isLoggedIn={true} />).find(Login);
-    expect(login.exists()).toBe(false);
+    expect(appWrapper.contains(<Login />)).toBe(false);
   });
 
   it("should render CourseList", () => {
-    const courseList = shallow(<App isLoggedIn={true} />).find(CourseList);
-    expect(courseList.exists()).toBe(true);
+    expect(appWrapper.find(CourseList)).toHaveLength(1);
+  });
+
+  const testUser = {
+    email: "test@test.com",
+    password: "test",
+    isLoggedIn: true,
+  };
+  const app = shallow(<App />);
+  it("logIn function should update state correctly", () => {
+    app.instance().logIn(testUser.email, testUser.password);
+    expect(app.state().user).toEqual(testUser);
+  });
+
+  it("logOut function should update state correctly", () => {
+    app.state().logOut();
+    expect(app.state().user).toEqual(user);
   });
 });
 
 describe("When ctrl+h is pressed", () => {
+  window.alert = jest.fn();
   it("should call logOut", () => {
-    const logOut = jest.fn();
-    const app = mount(<App logOut={logOut} />);
+    const app = mount(<App />);
     const event = new KeyboardEvent("keydown", {
       key: "h",
       ctrlKey: true,
     });
     document.dispatchEvent(event);
-    expect(logOut).toHaveBeenCalled();
+    expect(window.alert).toHaveBeenCalled();
+    jest.restoreAllMocks();
     app.unmount();
   });
 
-  window.alert = jest.fn();
   it("should alert 'Logging you out'", () => {
     const app = mount(<App />);
     const event = new KeyboardEvent("keydown", {
