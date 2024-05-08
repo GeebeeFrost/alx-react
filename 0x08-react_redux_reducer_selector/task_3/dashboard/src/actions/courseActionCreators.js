@@ -23,5 +23,3 @@ export function fetchCourseSuccess(data) {
 
 export const boundSelectCourse = (index) => dispatch(selectCourse(index));
 export const boundUnSelectCourse = (index) => dispatch(unSelectCourse(index));
-export const boundFetchCourseSuccess = (data) =>
-  dispatch(fetchCourseSuccess(data));
