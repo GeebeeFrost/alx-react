@@ -6,9 +6,10 @@ export const initialState = {
 };
 
 export default function notificationReducer(state = initialState, action) {
+  let notifications;
   switch (action.type) {
     case actions.FETCH_NOTIFICATIONS_SUCCESS:
-      let notifications = action.data.map((notification) => ({
+      notifications = action.data.map((notification) => ({
         ...notification,
         isRead: false,
       }));
