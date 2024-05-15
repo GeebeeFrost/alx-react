@@ -14,6 +14,7 @@ import {
   displayNotificationDrawer,
   hideNotificationDrawer,
 } from "../actions/uiActionCreators";
+import PropTypes from "prop-types";
 
 const listCourses = [
   { id: 1, name: "ES6", credit: 60 },
@@ -32,7 +33,6 @@ class App extends React.Component {
     super(props);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.state = {
-      displayDrawer: false,
       user: {
         email: "",
         password: "",
@@ -49,25 +49,29 @@ class App extends React.Component {
       },
       listNotifications: listNotifications,
     };
-    this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
-    this.handleHideDrawer = this.handleHideDrawer.bind(this);
     this.logIn = this.logIn.bind(this);
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
   }
+
+  static propTypes = {
+    isLoggedIn: PropTypes.bool,
+    displayDrawer: PropTypes.bool,
+    displayNotificationDrawer: PropTypes.func,
+    hideNotificationDrawer: PropTypes.func,
+  };
+
+  static defaultProps = {
+    isLoggedIn: false,
+    displayDrawer: false,
+    displayNotificationDrawer: () => {},
+    hideNotificationDrawer: () => {},
+  };
 
   handleKeyPress(event) {
     if (event.ctrlKey && event.key === "h") {
       alert("Logging you out");
       this.state.logOut();
     }
-  }
-
-  handleDisplayDrawer() {
-    this.setState({ displayDrawer: true });
-  }
-
-  handleHideDrawer() {
-    this.setState({ displayDrawer: false });
   }
 
   logIn(email, password) {
