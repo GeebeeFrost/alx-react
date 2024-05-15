@@ -10,6 +10,10 @@ import BodySectionWithMarginBottom from "../BodySection/BodySectionWithMarginBot
 import BodySection from "../BodySection/BodySection";
 import { StyleSheet, css } from "aphrodite";
 import { AppContext } from "./AppContext";
+import {
+  displayNotificationDrawer,
+  hideNotificationDrawer,
+} from "../actions/uiActionCreators";
 
 const listCourses = [
   { id: 1, name: "ES6", credit: 60 },
@@ -100,8 +104,8 @@ class App extends React.Component {
           <Notifications
             listNotifications={this.state.listNotifications}
             displayDrawer={this.props.displayDrawer}
-            handleDisplayDrawer={this.handleDisplayDrawer}
-            handleHideDrawer={this.handleHideDrawer}
+            handleDisplayDrawer={this.props.displayNotificationDrawer}
+            handleHideDrawer={this.props.hideNotificationDrawer}
             markNotificationAsRead={this.markNotificationAsRead}
           />
           <div className={css(styles.App)}>
@@ -139,5 +143,10 @@ export const mapStateToProps = (state) => ({
   isLoggedIn: state.get("isUserLoggedIn"),
   displayDrawer: state.get("isNotificationDrawerVisible"),
 });
+
+export const mapDispatchToProps = {
+  displayNotificationDrawer,
+  hideNotificationDrawer,
+};
 
 export default connect(mapStateToProps)(App);
