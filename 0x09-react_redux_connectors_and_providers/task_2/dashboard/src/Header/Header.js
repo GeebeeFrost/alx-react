@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
 import logo from "../assets/holberton-logo.jpg";
 import { StyleSheet, css } from "aphrodite";
-import { AppContext } from "../App/AppContext";
+import { connect } from "react-redux";
+import { logout } from "../actions/uiActionCreators";
+import PropTypes from "prop-types";
 
 const Header = () => {
-  const { user, logOut } = useContext(AppContext);
-
   return (
     <div className={css(styles.AppHeader)}>
       <div className="logo">
@@ -15,8 +15,8 @@ const Header = () => {
       {user.isLoggedIn && (
         <section id="logoutSection">
           <p>
-            Welcome {user.email}{" "}
-            <a onClick={logOut} className={css(styles.link)}>
+            Welcome {this.props.user.email}{" "}
+            <a onClick={logout} className={css(styles.link)}>
               Logout
             </a>
           </p>
@@ -24,6 +24,14 @@ const Header = () => {
       )}
     </div>
   );
+};
+
+Header.propTypes = {
+  user: PropTypes.object,
+};
+
+Header.defaultProps = {
+  user: {},
 };
 
 const styles = StyleSheet.create({
@@ -48,4 +56,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Header;
+const mapStateToProps = (state) => ({
+  user: state.get("user"),
+});
+
+export default connect(mapStateToProps, logout)(Header);

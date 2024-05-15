@@ -2,6 +2,7 @@ import React from "react";
 import { getFooterCopy, getFullYear } from "../utils/utils";
 import { StyleSheet, css } from "aphrodite";
 import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 const footer = `Copyright ${getFullYear()} - ${getFooterCopy(true)}`;
 
@@ -14,6 +15,14 @@ const Footer = () => {
       )}
     </div>
   );
+};
+
+Footer.propTypes = {
+  user: PropTypes.object,
+};
+
+Footer.defaultProps = {
+  user: {},
 };
 
 const footerStyles = StyleSheet.create({
