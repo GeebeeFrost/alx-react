@@ -13,6 +13,7 @@ import { AppContext } from "./AppContext";
 import {
   displayNotificationDrawer,
   hideNotificationDrawer,
+  login,
   loginRequest,
   logout,
 } from "../actions/uiActionCreators";
@@ -50,6 +51,8 @@ class App extends React.Component {
     displayDrawer: PropTypes.bool,
     displayNotificationDrawer: PropTypes.func,
     hideNotificationDrawer: PropTypes.func,
+    login: PropTypes.func,
+    logout: PropTypes.func,
   };
 
   static defaultProps = {
@@ -57,6 +60,8 @@ class App extends React.Component {
     displayDrawer: false,
     displayNotificationDrawer: () => {},
     hideNotificationDrawer: () => {},
+    login: () => {},
+    logout: () => {},
   };
 
   handleKeyPress(event) {
@@ -137,4 +142,4 @@ export const mapDispatchToProps = {
   logout,
 };
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
