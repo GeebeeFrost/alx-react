@@ -13,6 +13,8 @@ import { AppContext } from "./AppContext";
 import {
   displayNotificationDrawer,
   hideNotificationDrawer,
+  loginRequest,
+  logout,
 } from "../actions/uiActionCreators";
 import PropTypes from "prop-types";
 
@@ -38,18 +40,8 @@ class App extends React.Component {
         password: "",
         isLoggedIn: false,
       },
-      logOut: () => {
-        this.setState({
-          user: {
-            email: "",
-            password: "",
-            isLoggedIn: false,
-          },
-        });
-      },
       listNotifications: listNotifications,
     };
-    this.logIn = this.logIn.bind(this);
     this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
   }
 
@@ -74,16 +66,6 @@ class App extends React.Component {
     }
   }
 
-  logIn(email, password) {
-    this.setState({
-      user: {
-        email: email,
-        password: password,
-        isLoggedIn: true,
-      },
-    });
-  }
-
   markNotificationAsRead(id) {
     this.setState({
       listNotifications: this.state.listNotifications.filter(
@@ -103,7 +85,7 @@ class App extends React.Component {
   render() {
     return (
       <AppContext.Provider
-        value={{ user: this.state.user, logOut: this.state.logOut }}>
+        value={{ user: this.state.user, logOut: this.props.logout }}>
         <>
           <Notifications
             listNotifications={this.state.listNotifications}
@@ -120,7 +102,7 @@ class App extends React.Component {
               </BodySectionWithMarginBottom>
             ) : (
               <BodySectionWithMarginBottom title="Log in to continue">
-                <Login logIn={this.logIn} />
+                <Login logIn={this.props.login} />
               </BodySectionWithMarginBottom>
             )}
             <BodySection title="News from the School">
@@ -151,6 +133,8 @@ export const mapStateToProps = (state) => ({
 export const mapDispatchToProps = {
   displayNotificationDrawer,
   hideNotificationDrawer,
+  login: loginRequest,
+  logout,
 };
 
 export default connect(mapStateToProps)(App);
