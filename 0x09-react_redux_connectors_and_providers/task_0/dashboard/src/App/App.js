@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import Notifications from "../Notifications/Notifications";
 import Login from "../Login/Login";
 import Footer from "../Footer/Footer";
@@ -134,4 +135,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export const mapStateToProps = (state) => ({
+  isUserLoggedIn: state.get("isUserLoggedIn"),
+});
+
+export default connect(mapStateToProps)(App);
