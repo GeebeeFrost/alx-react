@@ -21,16 +21,14 @@ export const boundDisplayNotificationDrawer = () =>
 export const boundHideNotificationDrawer = () =>
   dispatch(hideNotificationDrawer());
 
-export const loginRequest = (email, password) => {
+export const loginRequest = (email, password) => (dispatch) => {
   boundLogin(email, password);
-  return fetch("/login-success.json");
-  // .then((res) => res.json())
-  // .then((json) => {
-  //   dispatch(loginSuccess());
-  //   return json;
-  // })
-  // .catch((error) => {
-  //   dispatch(loginFailure());
-  //   throw error;
-  // });
+  return fetch("/login-success.json")
+    .then((res) => res.json())
+    .then((json) => {
+      dispatch(loginSuccess());
+    })
+    .catch((error) => {
+      dispatch(loginFailure());
+    });
 };

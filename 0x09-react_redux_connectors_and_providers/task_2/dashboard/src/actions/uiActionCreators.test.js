@@ -1,7 +1,8 @@
 import * as actionCreators from "./uiActionCreators";
-// import * as loginSuccess from "../../dist/login-success.json";
-// import configureStore from "redux-mock-store";
-// import { thunk } from "redux-thunk";
+import * as loginSuccess from "../../dist/login-success.json";
+import fetchMock from "fetch-mock";
+import configureStore from "redux-mock-store";
+import thunk from "redux-thunk";
 
 describe("uiActionCreators tests", () => {
   it("login function should return a LOGIN action", () => {
@@ -28,51 +29,47 @@ describe("uiActionCreators tests", () => {
   });
 });
 
-// const middlewares = [thunk];
-// const mockStore = configureStore(middlewares);
+const middlewares = [thunk];
+const mockStore = configureStore(middlewares);
 
-// describe("loginRequest tests", () => {
-//   beforeEach(() => {
-//     global.fetch = jest.fn();
-//   });
+describe("Async action creators tests", function () {
+  afterEach(() => {
+    fetchMock.restore();
+  });
 
-//   afterEach(() => {
-//     global.fetch.mockClear();
-//   });
+  it("should verify that if the API returns the right response, the store received two actions LOGIN and LOGING_SUCCESS", () => {
+    const store = mockStore({});
+    fetchMock.restore();
 
-//   it("should pass LOGIN and LOGIN_SUCCESS to the store if API returns the right response", () => {
-//     const mockResponse = loginSuccess;
+    const user = {
+      email: "test@test.com",
+      password: "123456",
+    };
 
-//     global.fetch.mockResolvedValueOnce({
-//       json: () => Promise.resolve(mockResponse),
-//     });
+    fetchMock.get("http://localhost:8564/login-success.json", "{}");
 
-//     const store = mockStore({});
-//     const email = "johann.salva@holberton.nz";
-//     const password = "password";
+    return store.dispatch(loginRequest(user.email, user.password)).then(() => {
+      const actions = store.getActions();
+      expect(actions[0]).toEqual(login(user.email, user.password));
+      expect(actions[1]).toEqual(loginSuccess());
+    });
+  });
 
-//     return store.dispatch(
-//       actionCreators.loginRequest(email, password).then(() => {
-//         const actions = store.getActions();
-//         expect(actions[0]).toEqual(actionCreators.loginSuccess());
-//         expect(actions[1]).toEqual(actionCreators.login());
-//       })
-//     );
-//   });
+  it("should verify that if the API query fails, the store received two actions LOGIN and LOGIN_FAILURE", () => {
+    // Return the promise
+    const store = mockStore({});
 
-//   it("should pass LOGIN and LOGIN_FAILURE if API query fails", () => {
-//     global.fetch.mockRejectedValueOnce(400);
+    fetchMock.mock("http://localhost:8564/login-success.json", 500);
 
-//     const store = mockStore({});
-//     const email = "johann.salva@holberton.nz";
-//     const password = "password";
+    const user = {
+      email: "test@test.com",
+      password: "123456",
+    };
 
-//     return store.dispatch(
-//       actionCreators.loginRequest(email, password).catch(() => {
-//         const actions = store.getActions();
-//         expect(actions[0]).toEqual(actionCreators.loginFailure());
-//         expect(actions[1]).toEqual(actionCreators.login());
-//       })
-//     );
-//   });
-// });
+    return store.dispatch(loginRequest(user.email, user.password)).then(() => {
+      const actions = store.getActions();
+      expect(actions[0]).toEqual(login(user.email, user.password));
+      expect(actions[1]).toEqual(loginFailure());
+    });
+  });
+});
